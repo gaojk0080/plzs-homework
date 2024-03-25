@@ -18,7 +18,7 @@ def Triangle():
 
 def choose():
     ch = int(input("请选择要计算的公式，1为正方形，2为三角形，3为退出:"))
-    while(1):
+    while 1:
         match ch:
 	    case 1:
                 Square()
