@@ -1,57 +1,13 @@
-def Fibonacci_Sequence():
-#{  
-    qwq = 0;
-    a = float(input("输入斐波纳契数列的最大值："));
-    while(a<=0 or a%1 != 0):
-    #{
-        a = float(input("请输入一个正整数！重新输入："));
-    #} 
-    b = 0;
-    c = 1;
-    d = 1;
-    qaq = 0;
-    print(b, end=", ");
-    print(c, end=", ");
-    print(d, end=", ");
-    while(b < a and c < a and d < a):
-    #{ 
-        if(qaq == 0):
-        #{
-            b = c + d;
-            if(b > a):
-            #{
-                break;
-            #}
-            print(b, end=", ");
-            qaq = 1;
-            continue;
-        #}
-        if(qaq == 1):
-        #{
-            c = b + d;
-            if(c > a):
-            #{
-                break;
-            #}
-            print(c, end=", ");
-            
-            qaq = 2;
-            continue;
-        #}
-        if(qaq == 2):
-        #{
-            d = b + c;
-            if(d > a):
-            #{
-                break;
-            #}
-            print(d, end=", ");
-            qaq = 0;
-            continue;
-        #}
-    #}    
-    print();
-#}
+def fibonacci(n):
+    fib_list = [0, 1]
+    while fib_list[-1] <= n:
+        fib_list.append(fib_list[-1] + fib_list[-2])
+    return fib_list[:-1]
 
-Fibonacci_Sequence();
+num = int(input("请输入一个正整数："))
 
+fibonacci_sequence = fibonacci(num)
+
+print("不超过{}的斐波那契数列为：".format(num))
+for num in fibonacci_sequence:
+    print(num, end=" ")
