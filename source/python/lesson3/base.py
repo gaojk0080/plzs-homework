@@ -7,11 +7,17 @@ def convert_to_base(n, base):
     return result
 
 def main():
-    a = int(input("请输入一个自然数："))
-    while a <= 0:
-        a = int(input("请输入一个自然数："))
+    while True:
+        try:
+            user_input = int(input("请输入一个自然数："))
+            if user_input <= 0:
+                print("输入错误，请重新输入自然数！")
+            else:
+                break
+        except ValueError:
+            print("输入错误，请重新输入自然数！")
     for base in range(2, 37):
-        converted_num = convert_to_base(a, base)
-        print(f"{a}的{base}进制表示为：{converted_num}")
+        converted_num = convert_to_base(user_input, base)
+        print(f"{user_input}的{base}进制表示为：{converted_num}")
 
 main()

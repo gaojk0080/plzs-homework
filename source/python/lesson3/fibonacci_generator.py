@@ -16,9 +16,12 @@ def get_user_input():
         except ValueError:
             print("输入错误，请重新输入正整数！")
 
-
 user_input = get_user_input()
-fib_gen = fibonacci_generator(user_input)
-for num in fib_gen:
-    print(num)
+fibonacci_sequence = fibonacci_generator(user_input)
 
+output = ""
+for num in fibonacci_sequence:
+    output += str(num) + ", "
+
+output = output[:-2]
+print(output + ".")
