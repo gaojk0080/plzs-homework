@@ -231,6 +231,15 @@ def main(stdscr):
                 a = 2
                 draw_game(stdscr, a)
             key = stdscr.getch()
+            if key == curses.KEY_UP:
+                key = ord('w')
+            elif key == curses.KEY_DOWN:
+                key = ord('s')
+            elif key == curses.KEY_LEFT:
+                key = ord('a')
+            elif key == curses.KEY_RIGHT:
+                key = ord('d')
+                
             if key == ord('q'):
                 qwq = 'quit'
                 break
