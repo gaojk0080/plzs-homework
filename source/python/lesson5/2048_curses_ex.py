@@ -16,14 +16,9 @@ curses.init_pair(7, curses.COLOR_BLACK, curses.COLOR_BLUE)
 
 HEIGHT = 4
 WIDTH = 4
-HEIGHT_block = 6
-WIDTH_block = 14
+HEIGHT_block = 4
+WIDTH_block = 8
 game_board = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
-
-KEY_UP = ord('w')
-KEY_DOWN = ord('s')
-KEY_LEFT = ord('a')
-KEY_RIGHT = ord('d')
 
 color_map = {
     0: 1,
@@ -84,7 +79,7 @@ def draw_game(stdscr, a):
     x = (width - len(text)) // 2
     y = height - 1
 
-    stdscr.addstr(8*4, 1*20, text)
+    stdscr.addstr(int(HEIGHT_block*4+2), int(WIDTH_block_centre), text)
 
     stdscr.refresh()
 
@@ -160,13 +155,13 @@ def generate_number():
             break
 
 def handle_key_event(key):
-    if key == KEY_UP:
+    if key == ord('w'):
         move_up()
-    elif key == KEY_DOWN:
+    elif key == ord('s'):
         move_down()
-    elif key == KEY_LEFT:
+    elif key == ord('a'):
         move_left()
-    elif key == KEY_RIGHT:
+    elif key == ord('d'):
         move_right()
 
 def move_up():
