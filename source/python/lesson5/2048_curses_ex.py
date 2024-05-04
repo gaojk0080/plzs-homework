@@ -2,6 +2,7 @@
 import curses
 import random
 qwq = '111'
+score = 0
 stdscr = curses.initscr()
 curses.start_color()
 curses.use_default_colors()
@@ -16,7 +17,7 @@ curses.init_pair(7, curses.COLOR_BLACK, curses.COLOR_BLUE)
 
 HEIGHT = 4
 WIDTH = 4
-HEIGHT_block = 4
+HEIGHT_block = 3
 WIDTH_block = 8
 game_board = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
 
@@ -45,8 +46,8 @@ def divide_by_two(num):
 def draw_game(stdscr, a):
     stdscr.clear()
     curses.curs_set(0)
-    HEIGHT_block_centre = divide_by_two(HEIGHT_block)
-    WIDTH_block_centre = divide_by_two(WIDTH_block)
+    HEIGHT_block_centre = 1
+    WIDTH_block_centre = 4
     for i in range(HEIGHT):
         for j in range(WIDTH):
             value = game_board[i][j]
@@ -57,7 +58,7 @@ def draw_game(stdscr, a):
             for q in range(HEIGHT_block):
                 if q == HEIGHT_block_centre:
                         if value == 0:
-                            stdscr.addstr(q+i*HEIGHT_block, j*WIDTH_block, ' '.ljust(int(WIDTH_block)), curses.color_pair(color))
+                            stdscr.addstr(q+i*HEIGHT_block, j*WIDTH_block, '    .'.ljust(int(WIDTH_block)), curses.color_pair(color))
                         else:
                             stdscr.addstr(q+i*HEIGHT_block, j*WIDTH_block, ' '.ljust(int(WIDTH_block_centre-bit)), curses.color_pair(color))
                             stdscr.addstr(q+i*HEIGHT_block, j*WIDTH_block+int(WIDTH_block_centre)-bit, str(int(value)).ljust(int(WIDTH_block_centre+bit)), curses.color_pair(color))
@@ -80,7 +81,7 @@ def draw_game(stdscr, a):
     y = height - 1
 
     stdscr.addstr(int(HEIGHT_block*4+2), int(WIDTH_block_centre), text)
-
+    stdscr.addstr(0, int(WIDTH_block*4 + 4), f"Score: {score}")
     stdscr.refresh()
 
 def can_move(board):
@@ -165,6 +166,7 @@ def handle_key_event(key):
         move_right()
 
 def move_up():
+    global score
     for j in range(WIDTH):
         for i in range(1, HEIGHT):
             if game_board[i][j] != 0:
@@ -172,12 +174,15 @@ def move_up():
                 while k > 0 and game_board[k - 1][j] == 0:
                     game_board[k - 1][j] = game_board[k][j]
                     game_board[k][j] = 0
+                    score += game_board[i][k]
                     k -= 1
                 if k > 0 and game_board[k - 1][j] == game_board[k][j]:
                     game_board[k - 1][j] *= 2
+                    score += game_board[i][k]
                     game_board[k][j] = 0
 
 def move_down():
+    global score
     for j in range(WIDTH):
         for i in range(HEIGHT - 2, -1, -1):
             if game_board[i][j] != 0:
@@ -188,9 +193,11 @@ def move_down():
                     k += 1
                 if k < HEIGHT - 1 and game_board[k + 1][j] == game_board[k][j]:
                     game_board[k + 1][j] *= 2
+                    score += game_board[i][k]
                     game_board[k][j] = 0
 
 def move_left():
+    global score
     for i in range(HEIGHT):
         for j in range(1, WIDTH):
             if game_board[i][j] != 0:
@@ -201,9 +208,11 @@ def move_left():
                     k -= 1
                 if k > 0 and game_board[i][k - 1] == game_board[i][k]:
                     game_board[i][k - 1] *= 2
+                    score += game_board[i][k]
                     game_board[i][k] = 0
 
 def move_right():
+    global score
     for i in range(HEIGHT):
         for j in range(WIDTH - 2, -1, -1):
             if game_board[i][j] != 0:
@@ -214,9 +223,11 @@ def move_right():
                     k += 1
                 if k < WIDTH - 1 and game_board[i][k + 1] == game_board[i][k]:
                     game_board[i][k + 1] *= 2
+                    score += game_board[i][k]
                     game_board[i][k] = 0
 
 def main(stdscr):
+    global score
     while True:
         generate_number()
         generate_number()
@@ -244,6 +255,7 @@ def main(stdscr):
                 qwq = 'quit'
                 break
             if key == ord('r'):
+                score = 0
                 for i in range(HEIGHT):
                     for j in range(WIDTH):
                         game_board[i][j] = 0
